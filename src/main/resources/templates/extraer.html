@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<!-- Poner thymeleaf namespace-->
+<head>
+<meta charset="UTF-8">
+<title>Ingresar</title>
+<link rel="stylesheet" th:href="@{/styles.css}">
+<link rel="preconnect" href="https://fonts.gstatic.com">
+<link
+	href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;700&display=swap"
+	rel="stylesheet">
+</head>
+
+<body>
+ <h1 class="header">Ingresar dinero</h1>
+    <h2>Número de cuenta: <span th:text="${session.cuenta.idCuenta}"></span></h2>
+    <h2>Saldo <span th:text="${session.cuenta.saldo}"></span></h2>
+
+	<form th:action="@{/extraer}" method="post">
+		<label for="cantidad">Introduce la cantidad:</label>
+		<input type="number" name="cantidad">
+		
+		<!--Controlamos que el botón esté disponible según el saldo--->
+		<th:block th:if="${session.cuenta.saldo < 0}">
+        <input type="submit" value="Extraer" disabled class="btn">
+        </th:block>
+         
+		<th:block th:unless="${session.cuenta.saldo < 0}">
+        <input type="submit" value="Extraer" class="btn">
+        </th:block>
+	</form>
+	
+	<p th:text="${mensaje}"></p>
+	<a th:href="@{/menu}">Volver al menú</a>
+
+</body>
+</html>
